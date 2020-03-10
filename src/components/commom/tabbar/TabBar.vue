@@ -23,5 +23,6 @@
         bottom: 0;
         /*设置tab-bar上层阴影*/
         box-shadow: 0 -1px 1px rgba(100,100,100,.2);
+        z-index: 9;
     }
 </style>

@@ -35,8 +35,8 @@
         flex:1;
     }
     .recomment-item img{
-        width: 75px;
-        height: 75px;
+        width: 70px;
+        height: 70px;
         margin-bottom: 5px;
     }
 </style>
