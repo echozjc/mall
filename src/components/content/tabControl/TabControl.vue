@@ -11,23 +11,22 @@
 <script>
   export default {
     name: "TabControl",
-    props:{
-      title:{
-        type:Array,
-        default(){
+    props: {
+      title: {
+        type: Array,
+        default() {
           return [];
         }
       }
     },
-    data(){
-      return{
-        currentIndex:0,
+    data() {
+      return {
+        currentIndex: 0,
       }
     },
-    methods:{
-      itemClick(index){
-        this.currentIndex = index;
-        this.$emit('tabClick',index)
+    methods: {
+      itemClick(index) {
+        this.$emit('tabClick', index)
       }
     }
   }

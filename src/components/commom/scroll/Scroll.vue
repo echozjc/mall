@@ -19,8 +19,8 @@
         default:0,
       },
       pullUpLoad:{
-        type:Boolean,
-        default: false
+        type: Boolean,
+        default: false,
       }
     },
     data(){
@@ -33,27 +33,36 @@
       this.scroll = new BScroll(this.$refs.wrapper,{
         click:true,
         probeType: this.probeType,
-        pullUpLoad: this.pullUpLoad
+        pullUpLoad:this.pullUpLoad,
       })
 
       //2.监听滚动的区域
-      this.scroll.on('scroll',(position)=>{
-        this.$emit('scroll',position)
-      })
+      if(this.probeType === 2 || this.probeType === 3){
+        this.scroll.on('scroll',(position)=>{
+          this.$emit('scroll',position)
+        })
+      }
 
-      //3.监听上拉事件
-      this.scroll.on('pullingUp',()=>{
-        //上拉加载更多
-       this.$emit('pullingUp')
-      })
-
+      //监听滚动到底部
+      //默认加载一次
+      if(this.pullUpLoad){
+        this.scroll.on('pullingUp',()=>{
+          this.$emit('pullingUp')
+        })
+      }
     },
     methods:{
       scrollTo(x,y,time = 300){
-        this.scroll.scrollTo(x,y,time);
+        this.scroll && this.scroll.scrollTo(x,y,time);
       },
-      finishpullUp(){
-        this.scroll.finishPullUp();
+      refresh(){
+        this.scroll && this.scroll.refresh();
+      },
+      finishPullUp(){
+        this.scroll && this.scroll.finishPullUp();
+      },
+      getScrollY(){
+        return this.scroll?this.scroll.y:0;
       }
     }
   }
