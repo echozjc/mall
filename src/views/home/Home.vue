@@ -64,7 +64,8 @@
           isShowBackTop:false,
           tabOffsetTop:0,
           isTabFixed:false,
-          savaY:0,
+          saveY:0,
+          itemImageListener:null,
         }
       },
       computed: {
@@ -133,40 +134,36 @@
         getHomeMultidata() {
           getHomeMultidata().then(res => {
             // this.result = res;
-            if(res.data){
               this.banners = res.data.banner.list;
               this.recommends = res.data.recommend.list;
-            }
           })
         },
         getHomeGoods(type) {
           const page = this.goods[type].page + 1;
           getHomeGoods(type, page).then(res => {
             //第一次调用，res是第一页前30条数据
-            if(res.data){
               this.goods[type].list.push(...res.data.list)
               this.goods[type].page++;
-            }
           })
         },
       },
       mounted() {
         //图片加载完成的事件监听
         const refresh = deboundce(this.$refs.scroll.refresh,200);
-        this.$bus.$on('itemImageLoad',()=>{
+        this.itemImageListener = ()=>{
           refresh();
-        })
+        }
+        this.$bus.$on('itemImageLoad',this.itemImageListener);
       },
       activated() {
-        // const refresh = deboundce(this.$refs.scroll.refresh,200);
-        // this.$bus.$on('itemImageLoad',()=>{
-        //   refresh();
-        // })
+        this.$refs.scroll.refresh();
+        this.$refs.scroll.scrollTo(0,this.saveY,0)
          // this.$refs.scroll.refresh();
       },
       deactivated() {
-        this.saveY = this.$refs.scroll.getScrollY()
-        console.log(this.saveY)
+        this.saveY = this.$refs.scroll.getScrollY();
+        //取消全局监听事件
+        this.$bus.$off('itemImageLoad',this.itemImageListener);
       }
     }
 </script>

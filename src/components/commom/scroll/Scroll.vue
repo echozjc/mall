@@ -10,7 +10,7 @@
 </template>
 
 <script>
-    import BScroll from 'better-scroll'
+  import BScroll from 'better-scroll'
   export default {
     name: "Scroll",
     props:{
@@ -31,8 +31,12 @@
     mounted() {
       //1.创建BScroll对象
       this.scroll = new BScroll(this.$refs.wrapper,{
+        //设置为可监听点击事件
         click:true,
+        //当数字为2时，在手指滚动的过程中侦测，手指离开后的惯性滚动过程中不侦测
+        //3：只要是滚动，都侦测，其他数字不侦测
         probeType: this.probeType,
+        //配置上拉加载功能
         pullUpLoad:this.pullUpLoad,
       })
 
@@ -44,7 +48,8 @@
       }
 
       //监听滚动到底部
-      //默认加载一次
+      //在一次上拉加载的动作后，这个时机一般用来去后端请求数据
+      //默认加载一次,加载后调用finishPullUp可重新监听
       if(this.pullUpLoad){
         this.scroll.on('pullingUp',()=>{
           this.$emit('pullingUp')
@@ -69,5 +74,7 @@
 </script>
 
 <style scoped>
-
+    .wrapper{
+        position: relative;
+    }
 </style>
