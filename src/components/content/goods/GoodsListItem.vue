@@ -1,40 +1,34 @@
 <template>
-    <div class="goods" @click="itemClick">
-        <img :src="showImage" alt="" @load = "imageLoad">
+    <div class="goods">
+        <img v-lazy ="showImg" alt="" @load="imageLoad"
+        @click="itemClick">
         <div class="goods-info">
-            <p>{{goodsItem.title}}</p>
-            <span class="price">{{goodsItem.price}}</span>
-            <span class="collect">{{goodsItem.cfav}}</span>
+            <p>{{good.title}}</p>
+            <span class="price">{{good.price}}</span>
+            <span class="collect">{{good.cfav}}</span>
         </div>
     </div>
 </template>
 
 <script>
   export default {
-    name: "GoodListItem",
+    name: "GoodsListItem",
     props:{
-      goodsItem:{
-        type:Object,
-        default(){
-          return {};
-        }
-      }
+      good:Object
     },
     computed:{
-      showImage(){
-        return this.goodsItem.image || this.goodsItem.show.img;
+      showImg(){
+        return this.good.image || this.good.show.img;
       }
     },
     methods:{
       imageLoad(){
-          this.$bus.$emit('itemImageLoad');
+        this.$bus.$emit("imageLoad")
       },
       itemClick(){
-        /*replace不需要返回*/
-        /*push可以返回*/
-        this.$router.push('/detail/'+this.goodsItem.iid);
+        this.$router.push('/detail/'+this.good.iid)
       }
-    },
+    }
   }
 </script>
 
@@ -43,9 +37,11 @@
         padding-bottom: 40px;
         position: relative;
         width: 48%;
+        background-color: #fff;
     }
     .goods img {
         width: 100%;
+        height: 100%;
         border-radius: 5px;
     }
 
@@ -79,7 +75,7 @@
         content: '';
         position: absolute;
         left: -15px;
-        top: 0;
+        top: -1px;
         width: 14px;
         height: 14px;
         background: url("~assets/img/common/collect.svg") 0 0/14px 14px;

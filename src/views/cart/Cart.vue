@@ -1,46 +1,38 @@
 <template>
-   <div class="cart">
-       <nav-bar class="nav-bar">
-           <div slot="center">购物车({{length}})</div>
-       </nav-bar>
+    <div class="cart">
+        <!--导航-->
+        <nav-bar class="nav-bar">
+            <div slot="center">购物车({{length}})</div>
+        </nav-bar>
 
-       <!--商品的列表-->
-       <scroll class="content" ref="scroll">
-           <cart-list></cart-list>
-       </scroll>
-       <!--底部汇总-->
-       <cart-bottom-bar></cart-bottom-bar>
-   </div>
+        <!--商品列表-->
+        <cart-list></cart-list>
+
+        <!--底部汇总-->
+        <cart-bottom-bar/>
+    </div>
 </template>
 
 <script>
-    import NavBar from "../../components/commom/navbar/NavBar";
-    import CartList from './childComps/CartList';
-    import Scroll from "../../components/commom/scroll/Scroll";
-    import {mapGetters} from 'vuex'
+    import NavBar from "../../components/common/navbar/NavBar";
     import CartBottomBar from "./childComps/CartBottomBar";
-  export default {
+    import {mapGetters} from 'vuex'
+    import CartList from "./childComps/CartList";
+    export default {
     name: "Cart",
     components:{
       NavBar,
       CartList,
-      Scroll,
       CartBottomBar
     },
     computed:{
-      // cartLength(){
-      //   return this.$store.getters.cartLength
-      // }
-      //使用对象展开运算符，将getter混入到computed对象中
-      //数组
-      // ...mapGetters(['cartLength'])
-      //对象
+      //用法1
+      // ...mapGetters(['cartLength','cartList']),
+
+      //用法2
       ...mapGetters({
         length:'cartLength',
       })
-    },
-    activated() {
-      this.$refs.scroll.refresh();
     }
   }
 </script>
@@ -52,9 +44,6 @@
     .nav-bar{
         background-color: var(--color-tint);
         color: #fff;
-    }
-    .content{
-        height: calc(100% - 93px - 40px);
-        overflow: hidden;
+
     }
 </style>

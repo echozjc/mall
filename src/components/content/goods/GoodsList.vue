@@ -1,24 +1,18 @@
 <template>
     <div class="goods">
-        <goods-list-item v-for="item in goods" :goods-item = "item">
-        </goods-list-item>
+        <goods-list-item :good="item" v-for="(item,index) in goods" :key="index"/>
     </div>
 </template>
 
 <script>
-    import GoodsListItem from "./GoodListItem";
-  export default {
+    import GoodsListItem from "./GoodsListItem";
+    export default {
     name: "GoodsList",
+    props:{
+      goods:Array,
+    },
     components:{
       GoodsListItem
-    },
-    props:{
-      goods:{
-        type:Array,
-        default(){
-          return []
-        }
-      }
     }
   }
 </script>

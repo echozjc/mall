@@ -1,7 +1,7 @@
 <template>
     <div id="shop-item">
         <div class="item-selector">
-            <check-button :is-check="itemInfo.checked" @click.native="checkClick"/>
+            <check-button :is-checked="itemInfo.checked" @click.native="checkClick"/>
         </div>
         <div class="item-img">
             <img :src="itemInfo.image" alt="商品图片">
@@ -22,18 +22,20 @@
   export default {
     name: "CartListItem",
     props:{
-      itemInfo:Object,
-      default(){
-        return [];
-      }
-    },
-    components:{
-      CheckButton
+      itemInfo:{
+        type:Object,
+        default(){
+          return {};
+        }
+      },
     },
     methods:{
       checkClick(){
         this.itemInfo.checked = !this.itemInfo.checked;
       }
+    },
+    components:{
+      CheckButton
     }
   }
 </script>
@@ -48,7 +50,7 @@
     }
 
     .item-selector {
-        width: 14%;
+        width: 20px;
         display: flex;
         justify-content: center;
         align-items: center;

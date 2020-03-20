@@ -1,14 +1,14 @@
 <template>
-    <div class="shop-info">
+    <div class="shop-info" v-if="Object.keys(shop).length !== 0">
         <div class="shop-top">
-            <img :src="shop.logo">
+            <img :src="shop.shopLogo">
             <span class="title">{{shop.name}}</span>
         </div>
         <div class="shop-middle">
             <div class="shop-middle-item shop-middle-left">
                 <div class="info-sells">
                     <div class="sells-count">
-                        {{shop.sells | sellCountFilter}}
+                        {{shop.cSells | sellCountFilter}}
                     </div>
                     <div class="sells-text">总销量</div>
                 </div>
@@ -38,9 +38,12 @@
 <script>
   export default {
     name: "DetailShopInfo",
-    props: {
-      shop: {
-        type: Object
+    props:{
+      shop:{
+        type:Object,
+        default() {
+          return {};
+        }
       }
     },
     filters: {

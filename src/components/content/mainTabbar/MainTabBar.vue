@@ -1,6 +1,6 @@
 <template>
     <tab-bar>
-        <tab-bar-item path="/home" >
+        <tab-bar-item path="/home">
             <img slot="item-icon" src="~assets/img/tabbar/home.svg" alt="">
             <img slot="item-icon-active" src="~assets/img/tabbar/home_active.svg" alt="">
             <div slot="item-text">首页</div>
@@ -24,8 +24,9 @@
 </template>
 
 <script>
-    import TabBar from "components/commom/tabbar/TabBar";
-    import TabBarItem from "components/commom/tabbar/TabBarItem";
+
+    import TabBarItem from "../../common/tabbar/TabBarItem";
+    import TabBar from "../../common/tabbar/TabBar";
   export default {
     name: "MainTabBar",
     components:{

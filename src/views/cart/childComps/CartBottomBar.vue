@@ -2,41 +2,54 @@
     <div class="bottom-bar">
         <div class="check-content">
             <check-button class="check-button"
-                          :is-check="isSelectAll" @click.native="checkClick"/>
+              @click.native="checkClick" :is-checked="isSelectAll"/>
             <span>全选</span>
         </div>
-        <div class="price">合计:{{totalPrice}}</div>
-
-        <div class="calculate">去计算：{{checkLength}}</div>
+        <div class="price">
+            合计:{{totalPrice}}
+        </div>
+        <div class="calculate" @click="calcClick">
+            结算({{checkLength}})
+        </div>
     </div>
 </template>
 
 <script>
     import CheckButton from "../../../components/content/checkButton/CheckButton";
+    import {mapGetters} from 'vuex'
   export default {
     name: "CartBottomBar",
     components:{
       CheckButton
     },
     computed:{
+      ...mapGetters(['cartList']),
       totalPrice(){
-        return "￥"+this.$store.state.cartList.filter(item=>{
-          return item.checked;
+        return "￥"+this.cartList.filter(item=>{
+          return item.checked
         }).reduce((preValue,item)=>{
-          return preValue + item.price * item.count
+          return preValue + (item.price * item.count);
         },0).toFixed(2);
       },
       checkLength(){
-        return this.$store.state.cartList.filter(item=>item.checked).length
+        return this.cartList.filter(item=>item.checked).length;
       },
       isSelectAll(){
-        if(this.$store.state.cartList.length === 0) return false;
-        return this.checkLength === this.$store.state.cartList.length;
+        if(this.cartList.length == 0) return false;
+       return !this.cartList.find(item => !item.checked);
       }
     },
     methods:{
       checkClick(){
-          this.$store.state.cartList.forEach(item => item.checked = !this.isSelectAll)
+        const flag = !this.isSelectAll;
+        for(const i of this.cartList){
+          i.checked = flag;
+        }
+      },
+      calcClick(){
+        if(!this.isSelectAll){
+          this.$toast.show('请选择购买的商品',2000);
+        }
       }
     }
   }
@@ -46,23 +59,21 @@
     .bottom-bar{
         position: relative;
         display: flex;
-
+        background-color: #eee;
         height: 40px;
         line-height: 40px;
-
-        background-color: #eee;
     }
     .check-content{
         display: flex;
         align-items: center;
         margin-left: 10px;
-        width: 70px;
+        width: 75px;
     }
     .check-button{
         width: 20px;
         height: 20px;
-        margin-right: 7px;
         line-height: 20px;
+        margin-right: 5px;
     }
     .price{
         margin-left: 30px;
@@ -74,5 +85,4 @@
         color: #fff;
         text-align: center;
     }
-
 </style>
