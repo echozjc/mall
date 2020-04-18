@@ -32,11 +32,12 @@
         display: flex;
         text-align: center;
         line-height: 40px;
+        height: 40px;
         background-color: #fff;
         font-size: 15px;
+        z-index: 99;
     }
     .tab-control-item{
-        height: 40px;
         flex: 1;
     }
     .tab-control-item span{

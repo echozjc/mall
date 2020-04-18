@@ -50,6 +50,10 @@
       };
     },
     methods:{
+      _isMobile() {
+        let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
+        return flag;
+      },
       getHomeMultidata(){
         getHomeMultidata().then(res=>{
           this.banner = res.data.banner.list;
@@ -107,6 +111,14 @@
       this.getHomeGoods('new');
     },
     mounted() {
+      if(this._isMobile()) {
+        this.$toast.show('如果数据不显示，请尝试刷新或者稍后再试。', 1500)
+        setTimeout(() => {
+          this.$toast.show('github：443226005', 2500)
+        }, 1500);
+      } else {
+        this.$toast.show('建议使用手机浏览器获得更好体验', 9000)
+      };
     },
     components:{
       NavBar,
